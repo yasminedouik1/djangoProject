@@ -1,0 +1,17 @@
+{% extends 'resto/base.html' %}
+
+{% block title %}Delete Menu Item{% endblock %}
+
+{% block content %}
+<div class="text-center max-w-lg mx-auto">
+    <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 section-header">Delete Menu Item</h2>
+    <p class="text-[#6B4E31] mb-6">Are you sure you want to delete "{{ object.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex justify-center space-x-4">
+            <button type="submit" class="bg-[#800020] text-white px-3 py-1 rounded uppercase hover:bg-[#660018] transition">Delete</button>
+            <a href="{% url 'resto:menu_list' %}" class="bg-[#2A3D2E] text-white px-3 py-1 rounded uppercase hover:bg-[#1E2A21] transition">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

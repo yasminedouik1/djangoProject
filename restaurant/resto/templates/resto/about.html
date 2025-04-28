@@ -1,0 +1,102 @@
+{% extends 'resto/base.html' %}
+{% load static %}
+
+{% block title %}About Mamma Mia{% endblock %}
+
+{% block content %}
+<section class="relative bg-cover bg-center h-96"style="background-image: url('{% static 'images/about2.jpg' %}');">
+    <div class="relative flex items-center justify-center h-full text-center">
+        <div class="p-8">
+            <img src="{% static 'images/logo.png' %}" alt="Mamma Mia Logo" class="h-60 w-auto object-contain mb-4">
+            <p class="text-lg text-white">
+                A Taste of Italy, Crafted with Love
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-crema-white">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 section-header">
+            Our Story
+        </h2>
+        <p class="text-lg text-[#7A5C58] max-w-2xl mx-auto">
+            Mamma Mia was founded in 2024 by Yasmine Douik, a passionate food enthusiast with a deep love for Italian cuisine. Inspired by her travels to Italy and her desire to bring authentic flavors to her hometown in Tunis, Yasmine created Mamma Mia to share her culinary passion. Using recipes she learned from Italian chefs and adding her own creative twist, she built a cozy space where every dish tells a story of tradition and love. Today, Mamma Mia is a cherished spot for locals and visitors alike, offering a true taste of Italy with a warm, personal touch.
+        </p>
+    </div>
+</section>
+
+<section class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-8 section-header">
+            Meet Our Founder
+        </h2>
+        <div class="max-w-md mx-auto">
+            <img src="{% static 'images/yasmine.jpg' %}" alt="Yasmine, Founder" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
+            <h3 class="text-xl font-semibold text-[#4A2C2A] mb-2">Yasmine Douik - Founder</h3>
+            <p class="text-[#7A5C58]">
+                Yasmine’s passion for Italian cuisine and her dedication to creating a welcoming dining experience have made Mamma Mia a beloved destination in Tunis.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-crema-white">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-8 section-header">
+            Our Values
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div class="text-center">
+                <h3 class="text-xl font-semibold text-[#4A2C2A] mb-2">Authenticity</h3>
+                <p class="text-[#7A5C58]">
+                    We honor Italian traditions, using recipes that capture the essence of Italy.
+                </p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-xl font-semibold text-[#4A2C2A] mb-2">Quality</h3>
+                <p class="text-[#7A5C58]">
+                    We source the finest ingredients, blending local Tunisian produce with Italian imports.
+                </p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-xl font-semibold text-[#4A2C2A] mb-2">Community</h3>
+                <p class="text-[#7A5C58]">
+                    We bring people together, creating a space where everyone feels at home.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-8 section-header">
+            Find Us
+        </h2>
+        <p class="text-lg text-[#7A5C58] mb-6">
+            Visit us at 123 Rue d'Italie, Sousse, Tunisia
+        </p>
+        <div class="w-full max-w-4xl mx-auto h-96">
+            <iframe 
+                class="w-full h-full rounded-lg shadow-md" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.3683676784637!2d10.180948315202575!3d36.80649497994722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd337f5e7f3d5d%3A0x4b3e7f5e5c4e6f7a!2sTunis%2C%20Tunisia!5e0!3m2!1sen!2stn!4v1698765432109!5m2!1sen!2stn" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-white">
+    <div class="container mx-auto flex flex-col items-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 sm:mb-0 section-header">
+            Ready to Taste Italy?
+        </h2>
+        <a href="{% url 'resto:menu_list' %}" class="underline hover:text-[#800020] transition">
+            Check Our Menu
+        </a>
+    </div>
+</section>
+{% endblock %}

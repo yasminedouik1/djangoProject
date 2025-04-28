@@ -1,0 +1,61 @@
+
+
+.section-header {
+    position: relative;
+    display: inline-block;
+}
+
+.section-header::before,
+.section-header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 2px;
+    background-color: #800020;
+}
+
+.section-header::before {
+    left: -60px;
+}
+
+.section-header::after {
+    right: -60px;
+}
+
+input,
+select,
+textarea {
+    border: 1px solid #800020 !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem !important;
+    width: 100% !important;
+    background-color: #FFF8E7 !important;
+    color: #7A5C58 !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #800020 !important;
+}
+
+section a.checkmenu {
+    background-color: rgba(42, 61, 46, 0.8) !important;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.25rem; 
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+
+}
+
+
+section a.checkmenu:hover {
+    background-color: rgba(42, 61, 46);
+    border-color: rgba(42, 61, 46, 0.3); 
+    transform: translateY(-2px);
+}
+
+

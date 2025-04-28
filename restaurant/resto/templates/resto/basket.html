@@ -1,0 +1,53 @@
+{% extends 'resto/base.html' %}
+
+{% block title %}Your Basket{% endblock %}
+
+{% block content %}
+<div class="container mx-auto text-center">
+    <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 section-header">Your Basket</h2>
+    {% if basket_items_with_totals %}
+        <div class="bg-crema-white shadow-md rounded-lg p-6 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 text-[#4A2C2A] font-semibold border-b pb-2">
+                <div>Item</div>
+                <div>Price</div>
+                <div>Quantity</div>
+                <div>Total</div>
+                <div>Actions</div>
+            </div>
+            {% for entry in basket_items_with_totals %}
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 items-center border-b py-4">
+                    <div>{{ entry.item.menu_item.name }}</div>
+                    <div>{{ entry.item.menu_item.price|floatformat:2 }} DT</div>
+                    <div>
+                        <form method="post" class="flex justify-center items-center">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ entry.item.id }}">
+                            <input type="hidden" name="action" value="update_quantity">
+                            <input type="number" name="quantity" value="{{ entry.item.quantity }}" min="0" class="w-16 p-1 border border-[#800020] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#800020] text-center">
+                            <button type="submit" class="ml-2 text-[#800020] hover:text-[#660018] transition">Update</button>
+                        </form>
+                    </div>
+                    <div>{{ entry.total|floatformat:2 }} DT</div>
+                    <div>
+                        <form method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ entry.item.id }}">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="text-[#800020] hover:text-[#660018] transition">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-[#4A2C2A] font-semibold mb-4">Total Price: {{ total_price|floatformat:2 }} DT</p>
+        <form method="post" class="mb-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="confirm">
+            <button type="submit" class="bg-[#800020] text-white px-6 py-2 rounded uppercase hover:bg-[#660018] transition">Confirm Order</button>
+        </form>
+    {% else %}
+        <p class="text-[#7A5C58] text-center">Your basket is empty.</p>
+    {% endif %}
+    <a href="{% url 'resto:menu_list' %}" class="underline hover:text-[#800020] transition">Continue Shopping</a>
+</div>
+{% endblock %}

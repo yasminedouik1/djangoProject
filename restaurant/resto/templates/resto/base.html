@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mamma Mia{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-[#FFF8E7] font-['Lora'] flex flex-col min-h-screen text-[#7A5C58]">
+    <nav class="bg-[#2A3D2E] p-3 h-16">
+        <div class="container mx-auto flex flex-col sm:flex-row items-center "> 
+
+            <a href="{% url 'resto:dashboard' %}" class="mb-2 sm:mb-0 sm:mr-auto">
+                <img src="{% static 'images/logo.png' %}" alt="Mamma Mia Logo" class="h-10 w-auto object-contain">
+            </a>
+            <div class="flex space-x-6 text-lg text-white drop-shadow-md items-center">
+                <a href="{% url 'resto:dashboard' %}" class="hover:text-[#C1BD84] transition">Home</a>
+                <a href="{% url 'resto:about' %}" class="hover:text-[#C1BD84] transition">About</a>
+                <a href="{% url 'resto:menu_list' %}" class="hover:text-[#C1BD84] transition">Menu</a>
+                <a href="{% url 'resto:commandes' %}" class="hover:text-[#C1BD84] transition">Orders</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'resto:basket' %}" class="hover:text-[#C1BD84] transition"><i
+                        class="fa-solid fa-cart-shopping"></i></a>
+                <div class="relative">
+                    <span id="user-icon" class="hover:text-[#C1BD84] transition cursor-pointer"><i
+                            class="fa-solid fa-user"></i></span>
+                    <div id="user-dropdown"
+                        class="absolute right-0 mt-2 w-32 bg-white text-[#7A5C58] rounded-lg shadow-lg hidden">
+                        <a href="{% url 'resto:logout' %}"
+                            class="block px-4 py-2 hover:bg-[#F0EAD6] rounded-lg">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'resto:login' %}"
+                    class="border border-white text-white px-4 py-2 rounded-lg hover:border-[#C1BD84] hover:text-[#C1BD84] transition duration-300 ">Login</a>
+                <a href="{% url 'resto:signup' %}"
+                    class="border border-white text-white px-4 py-2 rounded-lg hover:border-[#C1BD84] hover:text-[#C1BD84] transition duration-300">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="container mx-auto p-6 flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="bg-[#2A3D2E] text-white p-4">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Mamma Mia. All rights reserved.</p>
+            <p>Contact: info@mammamia.com | Phone: +216 54 086 070</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userIcon = document.getElementById('user-icon');
+            const userDropdown = document.getElementById('user-dropdown');
+
+            userIcon.addEventListener('click', function () {
+                userDropdown.classList.toggle('hidden');
+            });
+
+            // Close the dropdown if clicking outside
+            document.addEventListener('click', function (event) {
+                if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

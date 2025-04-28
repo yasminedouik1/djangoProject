@@ -1,0 +1,76 @@
+{% extends 'resto/base.html' %}
+{% load static %}
+
+{% block title %}Mamma Mia - Home{% endblock %}
+
+{% block content %}
+<section class="relative bg-cover bg-center h-96"style="background-image: url('{% static 'images/italian_dining.jpg' %}');">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    
+    <div class="relative flex items-center justify-center h-full text-center">
+        <div class="bg-espresso-brown bg-opacity-80 p-8 rounded-lg max-w-lg">
+            <h1 class="text-4xl font-['Playfair_Display'] font-bold text-white mb-2">
+                Authentic Italian Cuisine at Mamma Mia
+            </h1>
+            <p class="text-lg text-white mb-6">
+                Savor the Taste of Italy, Fresh Every Day
+            </p>
+            <a href="{% url 'resto:menu_list' %}" class="checkmenu text-white px-6 py-3 rounded uppercase transition">
+                Check Our Menu
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="container mx-auto py-12 text-center">
+    <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-8 section-header">
+        Restaurant Statistics
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="p-6 rounded-lg text-center bg-crema-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <i class="fa-solid fa-users text-[#D76C2E] text-3xl mb-4"></i>
+            <h3 class="text-lg font-semibold text-[#4A2C2A] mb-2">Total Clients</h3>
+            <p class="text-3xl font-bold text-[#D76C2E]">1,234</p>
+        </div>
+        <div class="p-6 rounded-lg text-center bg-crema-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <i class="fa-solid fa-utensils text-[#D76C2E] text-3xl mb-4"></i>
+            <h3 class="text-lg font-semibold text-[#4A2C2A] mb-2">Total Orders</h3>
+            <p class="text-3xl font-bold text-[#D76C2E]">5,678</p>
+        </div>
+        <div class="p-6 rounded-lg text-center bg-crema-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <i class="fa-solid fa-book-open text-[#D76C2E] text-3xl mb-4"></i>
+            <h3 class="text-lg font-semibold text-[#4A2C2A] mb-2">Menu Items</h3>
+            <p class="text-3xl font-bold text-[#D76C2E]">{{ menu_items_count }}</p>
+        </div>
+    </div>
+</div>
+
+<section class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-8 section-header">
+            Contact Us
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="text-left">
+                <h3 class="text-xl font-semibold text-[#4A2C2A] mb-4">Get in Touch</h3>
+                <p class="text-[#7A5C58] mb-2"><strong>Address:</strong> 123 Rue d'Italie, Sousse, Tunisia</p>
+                <p class="text-[#7A5C58] mb-2"><strong>Phone:</strong> +216 54 086 070 </p>
+                <p class="text-[#7A5C58] mb-2"><strong>Email:</strong> info@mammamia.com</p>
+                <p class="text-[#7A5C58]"><strong>Hours:</strong> Mon-Sat 11:00 AM - 10:00 PM</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-[#4A2C2A] mb-4">Send Us a Message</h3>
+                <form action="{% url 'resto:dashboard' %}" method="post" class="space-y-4">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-[#800020] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#800020]" required>
+                    <input type="email" name="email" placeholder="Your Email" class="w-full p-3 border border-[#800020] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#800020]" required>
+                    <textarea name="message" placeholder="Your Message" rows="4" class="w-full p-3 border border-[#800020] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#800020]" required></textarea>
+                    <button type="submit" class="bg-[#800020] text-white px-6 py-3 rounded uppercase hover:bg-[#660018] transition">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

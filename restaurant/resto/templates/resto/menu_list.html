@@ -1,0 +1,74 @@
+{% extends 'resto/base.html' %}
+
+{% block title %}Menu List{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 section-header">Our Menu</h2>
+    </div>
+    <div class="mb-6">
+        <form method="get" class="flex justify-center items-center">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Search by name..." class="w-full sm:w-64 p-2 border border-[#800020] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#800020]">
+            <button type="submit" class="bg-[#800020] text-white px-4 py-2 rounded-r-lg uppercase hover:bg-[#660018] transition">Search</button>
+        </form>
+    </div>
+    <div class="flex justify-center space-x-4 mb-6">
+        <a href="{% url 'resto:menu_list' %}" class="px-4 py-2 rounded {% if not request.resolver_match.kwargs.category %}bg-[#800020] text-white{% else %}bg-[#F0EAD6] text-[#4A2C2A]{% endif %} hover:bg-[#660018] hover:text-white transition uppercase">All</a>
+        <a href="{% url 'resto:menu_list_category' 'appetizer' %}" class="px-4 py-2 rounded {% if request.resolver_match.kwargs.category == 'appetizer' %}bg-[#800020] text-white{% else %}bg-[#F0EAD6] text-[#4A2C2A]{% endif %} hover:bg-[#660018] hover:text-white transition uppercase">Appetizer</a>
+        <a href="{% url 'resto:menu_list_category' 'main' %}" class="px-4 py-2 rounded {% if request.resolver_match.kwargs.category == 'main' %}bg-[#800020] text-white{% else %}bg-[#F0EAD6] text-[#4A2C2A]{% endif %} hover:bg-[#660018] hover:text-white transition uppercase">Main Plat</a>
+        <a href="{% url 'resto:menu_list_category' 'dessert' %}" class="px-4 py-2 rounded {% if request.resolver_match.kwargs.category == 'dessert' %}bg-[#800020] text-white{% else %}bg-[#F0EAD6] text-[#4A2C2A]{% endif %} hover:bg-[#660018] hover:text-white transition uppercase">Dessert</a>
+        <a href="{% url 'resto:menu_list_category' 'drink' %}" class="px-4 py-2 rounded {% if request.resolver_match.kwargs.category == 'drink' %}bg-[#800020] text-white{% else %}bg-[#F0EAD6] text-[#4A2C2A]{% endif %} hover:bg-[#660018] hover:text-white transition uppercase">Drink</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for item in menu_items %}
+        <div class="text-center">
+            {% if item.photo %}
+            <img src="{{ item.photo.url }}" alt="{{ item.name }}" class="w-48 h-48 object-cover rounded-lg mx-auto mb-4">
+            {% endif %}
+            <h3 class="text-lg font-['Playfair_Display'] font-semibold text-[#4A2C2A]">{{ item.name }}</h3>
+            <p class="text-[#7A5C58]">{{ item.description|truncatewords:20 }}</p>
+            <p class="text-[#800020] font-bold">{{ item.price }} DT</p>
+            <p class="text-sm text-[#7A5C58]">{{ item.get_category_display }}</p>
+            <div class="mt-4 flex justify-center space-x-2">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'resto:add_to_basket' item.id %}" class="bg-[#800020] text-white px-3 py-1 rounded uppercase hover:bg-[#660018] transition">Add to Cart</a>
+                {% else %}
+                    <a href="{% url 'resto:login' %}" class="bg-[#800020] text-white px-3 py-1 rounded uppercase hover:bg-[#660018] transition">Login to Order</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-[#7A5C58] text-center col-span-full">No menu items available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% if messages %}
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+            {% for message in messages %}
+                <p class="text-[#4A2C2A] font-semibold">{{ message }}</p>
+            {% endfor %}
+            <button id="close-modal" class="mt-4 bg-[#800020] text-white px-4 py-2 rounded uppercase hover:bg-[#660018] transition">Close</button>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('success-modal');
+        const closeButton = document.getElementById('close-modal');
+
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+
+        if (closeButton) {
+            closeButton.addEventListener('click', function () {
+                modal.classList.add('hidden');
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'resto/base.html' %}
+
+{% block title %}Your Orders{% endblock %}
+
+{% block content %}
+<div class="container mx-auto text-center">
+    <h2 class="text-3xl font-['Playfair_Display'] font-bold text-[#4A2C2A] mb-6 section-header">Your Orders</h2>
+
+    {% if messages %}
+        <div class="mb-6">
+            {% for message in messages %}
+                <div class="bg-{% if message.tags == 'success' %}green-100{% else %}red-100{% endif %} text-{% if message.tags == 'success' %}green-700{% else %}red-700{% endif %} px-4 py-2 rounded-lg">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if orders_with_totals %}
+        {% for order_data in orders_with_totals %}
+            <div class="bg-crema-white shadow-md rounded-lg p-6 mb-6 relative">
+                <h3 class="text-xl font-['Playfair_Display'] font-semibold text-[#4A2C2A] mb-2">Order #{{ order_data.order.id }} - {{ order_data.order.status }}</h3>
+                <p class="text-[#7A5C58] mb-4">Placed on: {{ order_data.order.created_at }}</p>
+                <ul class="text-left max-w-md mx-auto">
+                    {% for item in order_data.order.orderitem_set.all %}
+                        <li class="text-[#7A5C58] mb-2">{{ item.menu_item.name }} (x{{ item.quantity }}) - {{ item.menu_item.price|floatformat:2 }} DT</li>
+                    {% endfor %}
+                </ul>
+                <p class="text-[#800020] font-bold mt-4">Total: {{ order_data.total|floatformat:2 }} DT</p>
+                {% if order_data.order.status == 'PENDING' %}
+                    <form method="post" action="{% url 'resto:cancel_order' order_data.order.id %}" class="mt-4">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-[#800020] text-white px-4 py-2 rounded uppercase hover:bg-[#660018] transition">Cancel Order</button>
+                    </form>
+                {% endif %}
+                {% if order_data.order.status == 'CANCELLED' %}
+                    <form method="post" action="{% url 'resto:delete_order' order_data.order.id %}" class="absolute top-4 right-4">
+                        {% csrf_token %}
+                        <button type="submit" class="text-[#800020] hover:text-[#660018] transition">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="text-[#7A5C58] text-center">No orders yet.</p>
+        {% endfor %}
+    {% else %}
+        <p class="text-[#7A5C58] text-center">Please log in to view your orders.</p>
+    {% endif %}
+</div>
+{% endblock %}
